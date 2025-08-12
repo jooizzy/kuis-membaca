@@ -1,46 +1,277 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kuis Membaca</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kuis Huruf - Halaman 1</title>
+
+  <style>
+    /* ganti file font di folder fonts/ sesuai nama file kamu */
+    @font-face {
+      font-family: "CustomFont";
+      src: url("fonts/CustomFont.woff2") format("woff2"),
+           url("fonts/CustomFont.woff") format("woff");
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root{
+      --black: #000;
+      --grey: #8a8a8a;
+      --red:  #d32f2f;
+      --touch-size: 24pt; /* sesuai permintaan */
+    }
+
+    html,body{
+      height:100%;
+      margin:0;
+      font-family: "CustomFont", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:#fff;
+      color:var(--black);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .wrap{
+      max-width:760px;
+      margin:18px auto;
+      padding:16px;
+    }
+
+    h1{
+      font-size:1.25rem;
+      margin:0 0 12px 0;
+    }
+
+    .buttons{
+      display:flex;
+      gap:12px;
+      margin-bottom:20px;
+      flex-wrap:wrap;
+    }
+
+    .letter-btn{
+      background:#f4f4f4;
+      border:1px solid #ddd;
+      border-radius:8px;
+      padding:18px 26px;
+      font-size:var(--touch-size);
+      cursor:pointer;
+      user-select:none;
+      touch-action:manipulation;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:72px;
+    }
+
+    .letter-btn:active{ transform:scale(.98); }
+
+    .letter {
+      font-weight:700;
+    }
+
+    .letter.black { color: var(--black); }
+    .letter.grey  { color: var(--grey); }
+    .letter.red   { color: var(--red); }
+
+    .line {
+      margin:12px 0;
+      font-size: var(--touch-size);
+      line-height:1.5;
+      word-break:break-word;
+    }
+
+    .segment{
+      margin-right:12px;
+      display:inline-block;
+      padding:6px 8px;
+      border-radius:6px;
+    }
+
+    .hint{
+      margin-top:18px;
+      font-size:0.95rem;
+      color:#555;
+    }
+
+    .controls{
+      margin-top:18px;
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      padding:10px 14px;
+      border-radius:6px;
+      border:1px solid #ccc;
+      background:#fff;
+      cursor:pointer;
+    }
+  </style>
 </head>
 <body>
-  <h1>Kuis Membaca</h1>
-  <p>Bacalah kata ini dengan keras: <strong id="target-word">apel</strong></p>
-  <button id="start-btn">Mulai Rekam</button>
-  <p id="status"></p>
+  <div class="wrap">
+    <h1>Halaman 1 — Perkenalkan huruf</h1>
+
+    <!-- Tombol utama: huruf a dan ba (warna hitam awalnya) -->
+    <div class="buttons">
+      <div class="letter-btn" data-type="a" role="button" aria-label="huruf a">
+        <span class="letter black">a</span>
+      </div>
+
+      <div class="letter-btn" data-type="ba" role="button" aria-label="huruf ba">
+        <span class="letter black">ba</span>
+      </div>
+    </div>
+
+    <!-- Paragraf baru berisi urutan yang diminta -->
+    <div class="line" id="line1">
+      <!-- "aa a (warna hitam) a (warna abu tua)" -->
+      <span class="segment"><span class="letter black">aa</span></span>
+      <span class="segment"><span class="letter black">a</span></span>
+      <span class="segment"><span class="letter grey">a</span></span>
+    </div>
+
+    <div class="line" id="line2">
+      <!-- "aba (a warna hitam) ba (warna abu tua)" -->
+      <span class="segment"><span class="letter black">a</span><span> </span><span class="letter grey">ba</span></span>
+    </div>
+
+    <div class="line" id="line3">
+      <!-- "baba (ba warna hitam) dan (ba warna abu)" -->
+      <span class="segment"><span class="letter black">ba</span><span class="letter black">ba</span></span>
+      <span class="segment"><span class="letter grey">ba</span></span>
+    </div>
+
+    <div class="line" id="line4">
+      <!-- "baa (ba warna hitam) dan (a warna abu)" -->
+      <span class="segment"><span class="letter black">ba</span><span class="letter black">a</span></span>
+      <span class="segment"><span class="letter grey">a</span></span>
+    </div>
+
+    <div class="controls">
+      <button class="btn" id="resetBtn">Reset warna</button>
+      <button class="btn" id="toggleSound">Mute / Unmute</button>
+    </div>
+
+    <p class="hint">Sentuh huruf <strong>a</strong> atau <strong>ba</strong> di atas untuk mengganti warnanya menjadi merah dan memutar suara. Agar suara berjalan, unggah file audio <code>a.mp3</code> dan <code>ba.mp3</code> ke folder yang sama dengan file ini.</p>
+  </div>
+
+  <!-- Audio (ganti nama file jika format berbeda, mis: a.m3 → a.mp3) -->
+  <audio id="audio-a" preload="auto" src="audio/a.mp3"></audio>
+  <audio id="audio-ba" preload="auto" src="audio/ba.mp3"></audio>
 
   <script>
-    const targetWord = document.getElementById('target-word').innerText.toLowerCase();
-    const statusEl = document.getElementById('status');
-    const startBtn = document.getElementById('start-btn');
+    // Element references
+    const btnA = document.querySelector('.letter-btn[data-type="a"]');
+    const btnBa = document.querySelector('.letter-btn[data-type="ba"]');
+    const audioA = document.getElementById('audio-a');
+    const audioBa = document.getElementById('audio-ba');
+    const resetBtn = document.getElementById('resetBtn');
+    const toggleSoundBtn = document.getElementById('toggleSound');
+    let soundEnabled = true;
 
-    // Web Speech API (SpeechRecognition)
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const recognition = new SpeechRecognition();
-    recognition.lang = 'id-ID';
-    recognition.continuous = false;
+    // helper: set active (red) for a letter span passed (the visible .letter)
+    function setActiveLetter(el) {
+      // remove red class from all same-letter types if you want single-active behavior
+      // but here we only change the clicked element's visual
+      el.classList.remove('black','grey');
+      el.classList.add('red');
+    }
 
-    startBtn.onclick = () => {
-      statusEl.textContent = "Mendengarkan...";
-      recognition.start();
-    };
-
-    recognition.onresult = (event) => {
-      const userSpeech = event.results[0][0].transcript.toLowerCase().trim();
-      if (userSpeech === targetWord) {
-        statusEl.textContent = "Benar! 🎉";
-      } else {
-        statusEl.textContent = "Bacaanmu belum benar, coba ulangi lagi.";
-        new Audio('https://www.soundjay.com/button/beep-07.wav').play();
+    function playSoundFor(type){
+      if(!soundEnabled) return;
+      if(type === 'a'){
+        if(audioA){
+          audioA.currentTime = 0;
+          audioA.play().catch(()=>{ /* ignore autoplay issues */ });
+        }
+      } else if(type === 'ba'){
+        if(audioBa){
+          audioBa.currentTime = 0;
+          audioBa.play().catch(()=>{});
+        }
       }
-    };
+    }
 
-    recognition.onerror = () => {
-      statusEl.textContent = "Terjadi kesalahan. Coba lagi.";
-    };
+    // On touch/click handlers for top buttons
+    btnA.addEventListener('click', ()=> {
+      const span = btnA.querySelector('.letter');
+      setActiveLetter(span);
+      playSoundFor('a');
+    });
+
+    btnBa.addEventListener('click', ()=> {
+      const span = btnBa.querySelector('.letter');
+      setActiveLetter(span);
+      playSoundFor('ba');
+    });
+
+    // Also allow clicking any letter in the body lines:
+    document.querySelectorAll('.line .letter').forEach(letterEl => {
+      letterEl.style.cursor = 'pointer';
+      letterEl.addEventListener('click', (e)=>{
+        const text = letterEl.textContent.trim().toLowerCase();
+        // determine whether this span is 'a' or 'ba' (or composite like 'aa','ba' etc)
+        if(text === 'a'){
+          setActiveLetter(letterEl);
+          playSoundFor('a');
+        } else if(text === 'ba'){
+          setActiveLetter(letterEl);
+          playSoundFor('ba');
+        } else {
+          // for composites like "aa" or "baba" we can try to find inner 'a' or 'ba' spans;
+          // in our markup composites are made of adjacent spans; if text length>2, do nothing
+        }
+      });
+    });
+
+    resetBtn.addEventListener('click', ()=>{
+      document.querySelectorAll('.letter').forEach(el=>{
+        el.classList.remove('red');
+        // restore original black/grey depending on existing class in markup:
+        // if element originally had grey in markup we keep it grey; else black.
+        // We'll check data-state by scanning text color in DOM: simpler -> use attribute
+        // But since markup uses classes black/grey, restore those if present in HTML source:
+        // We'll default to black if neither present.
+        if(el.classList.contains('grey')) {
+          // already grey -> keep grey
+          el.classList.remove('black','red');
+          el.classList.add('grey');
+        } else {
+          el.classList.remove('grey','red');
+          el.classList.add('black');
+        }
+      });
+    });
+
+    toggleSoundBtn.addEventListener('click', ()=>{
+      soundEnabled = !soundEnabled;
+      toggleSoundBtn.textContent = soundEnabled ? 'Mute / Unmute' : 'Mute / Unmute';
+      // visual feedback optional
+      toggleSoundBtn.style.opacity = soundEnabled ? '1' : '0.6';
+    });
+
+    // mobile-friendly: ensure touchstart triggers same as click
+    function bindTouch(el, fn){
+      el.addEventListener('touchstart', function(e){
+        e.preventDefault();
+        fn();
+      }, {passive:false});
+    }
+    bindTouch(btnA, ()=> btnA.click());
+    bindTouch(btnBa, ()=> btnBa.click());
+
+    // Ensure initial classes intact (some browsers may rearrange)
+    (function initRestore(){
+      document.querySelectorAll('.letter').forEach(el=>{
+        if(!el.classList.contains('black') && !el.classList.contains('grey') && !el.classList.contains('red')){
+          el.classList.add('black');
+        }
+      });
+    })();
   </script>
 </body>
 </html>
-
