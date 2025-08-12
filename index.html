@@ -30,24 +30,29 @@
       background:#fff;
       color:var(--black);
       -webkit-tap-highlight-color: transparent;
+      text-align: center;
     }
 
     .wrap{
       max-width:760px;
       margin:18px auto;
       padding:16px;
+      
     }
 
     h1{
       font-size:1.25rem;
       margin:0 0 12px 0;
+      
     }
 
     .buttons{
       display:flex;
+      justify-content: center;
       gap:12px;
       margin-bottom:20px;
       flex-wrap:wrap;
+      text-align: center;
     }
 
     .letter-btn{
@@ -63,12 +68,15 @@
       align-items:center;
       justify-content:center;
       min-width:72px;
+      
     }
 
-    .letter-btn:active{ transform:scale(.98); }
+    .letter-btn:active{ transform:scale(1.1); }
 
     .letter {
-      font-weight:700;
+      font-weight:800;
+      font-size: 44pt;
+      
     }
 
     .letter.black { color: var(--black); }
@@ -80,6 +88,7 @@
       font-size: var(--touch-size);
       line-height:1.5;
       word-break:break-word;
+      text-align: center;
     }
 
     .segment{
@@ -87,6 +96,8 @@
       display:inline-block;
       padding:6px 8px;
       border-radius:6px;
+      
+      
     }
 
     .hint{
@@ -108,17 +119,20 @@
       border:1px solid #ccc;
       background:#fff;
       cursor:pointer;
+   	
     }
+    
   </style>
 </head>
 <body>
   <div class="wrap">
-    <h1>Halaman 1 — Perkenalkan huruf</h1>
+    <h1>Halaman 1 — Mengenal Huruf</h1>
 
     <!-- Tombol utama: huruf a dan ba (warna hitam awalnya) -->
     <div class="buttons">
       <div class="letter-btn" data-type="a" role="button" aria-label="huruf a">
         <span class="letter black">a</span>
+        
       </div>
 
       <div class="letter-btn" data-type="ba" role="button" aria-label="huruf ba">
@@ -129,9 +143,10 @@
     <!-- Paragraf baru berisi urutan yang diminta -->
     <div class="line" id="line1">
       <!-- "aa a (warna hitam) a (warna abu tua)" -->
-      <span class="segment"><span class="letter black">aa</span></span>
-      <span class="segment"><span class="letter black">a</span></span>
-      <span class="segment"><span class="letter grey">a</span></span>
+      <span class="letter black">a</span><span class="letter grey">a</span>&nbsp;&nbsp;
+      <span class="letter black">a</span><span class="letter grey">ba</span>&nbsp;&nbsp;
+      <span class="letter black">ba</span><span class="letter grey">a</span>
+
     </div>
 
     <div class="line" id="line2">
