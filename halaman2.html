@@ -3,78 +3,313 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Kuis Huruf - Halaman 2</title>
-  <link rel="stylesheet" href="style.css"> <!-- kalau mau pakai CSS yang sama -->
+  <title>Kuis Huruf - Halaman 1</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --black: #000;
+      --grey: #8a8a8a;
+      --red:  #d32f2f;
+      --touch-size: 24pt; /* sesuai permintaan */
+    }
+
+    html,body{
+      height:100%;
+      margin:0;
+      font-family: 'Didact Gothic', sans-serif;
+      background:#fff;
+      color:var(--black);
+      -webkit-tap-highlight-color: transparent;
+      text-align: center;
+    }
+
+    .wrap{
+      max-width:760px;
+      margin:18px auto;
+      padding:16px;
+      
+    }
+
+    h1{
+      font-size:1.25rem;
+      margin:0 0 12px 0;
+      
+    }
+
+    .buttons{
+      display:flex;
+      justify-content: center;
+      gap:12px;
+      margin-bottom:20px;
+      flex-wrap:wrap;
+      text-align: center;
+    }
+
+    .letter-btn{
+      background-color: #e7e9ebff; 
+      color: white; 
+      border:1px solid #ddd;
+      border-radius:8px;
+      padding:18px 26px;
+      font-size:var(--touch-size);
+      cursor:pointer;
+      user-select:none;
+      touch-action:manipulation;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:72px;
+      
+    }
+
+    .letter-btn:active{ transform:scale(1.1); }
+
+    .letter {
+      font-weight:bold;
+      font-size: 42pt;
+      
+    }
+
+    .letter.black { color: var(--black); }
+    .letter.grey  { color: var(--grey); }
+    .letter.red   { color: var(--red); }
+
+    .line {
+      margin:12px 0;
+      font-size: var(--touch-size);
+      line-height:1.5;
+      word-break:break-word;
+      text-align: center;
+    }
+
+    .segment{
+      margin-right:12px;
+      display:inline-block;
+      padding:6px 8px;
+      border-radius:6px;
+      
+      
+    }
+
+    .hint{
+      margin-top:18px;
+      font-size:0.95rem;
+      color:#555;
+    }
+
+    .controls{
+      margin-top:18px;
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      padding:10px 14px;
+      border-radius:6px;
+      border:1px solid #ccc;
+      background:#fff;
+      cursor:pointer;
+   	
+    }
+    
+  </style>
 </head>
 <body>
   <div class="wrap">
     <h1>Halaman 2 — Mengenal Huruf</h1>
 
+    <!-- Tombol utama: huruf ba dan ca (warna hitam awalnya) -->
     <div class="buttons">
-      <div class="letter-btn" data-type="ca">
+      <div class="letter-btn" data-type="ba" role="button" aria-label="huruf a">
+        <span class="letter black">ba</span>
+        
+      </div>
+
+      <div class="letter-btn" data-type="ca" role="button" aria-label="huruf ba">
         <span class="letter black">ca</span>
       </div>
-
-      <div class="letter-btn" data-type="da">
-        <span class="letter black">da</span>
-      </div>
     </div>
 
-    <div class="line">
-      <span class="letter black">ca</span>&nbsp;&nbsp;&nbsp;
-      <span class="letter grey">ca</span>&nbsp;&nbsp;&nbsp;
-      <span class="letter black">da</span>&nbsp;&nbsp;&nbsp;
-      <span class="letter grey">da</span>
+    <!-- Paragraf baru berisi urutan yang diminta -->
+    <div class="line" id="line1">
+      <!-- "aa a (warna hitam) a (warna abu tua)" -->
+      <span class="letter black">ba</span>&nbsp;&nbsp;&nbsp;<span class="letter grey">ca</span>&nbsp;&nbsp;&nbsp;<span class="letter black">ba</span><span class="letter grey">ca</span>
+
     </div>
 
-    <div style="text-align: right;">
-      <button onclick="window.location.href='halaman3.html'" style="
-        background-color: #00aa71ff; 
-        color: white; 
-        padding: 10px 20px; 
-        border: none; 
-        border-radius: 5px; 
-        font-size: 16px;
-        font-weight:900;
-        cursor: pointer;">
-        Next
-      </button>
+    <div class="line" id="line2">
+      <!-- "aba (a warna hitam) ba (warna abu tua)" -->
+      <span class="segment"><span class="letter black">ca</span><span> &nbsp;&nbsp;&nbsp;</span><span class="letter grey">ba</span></span>&nbsp;
+      <span class="letter black">ca</span><span class="letter grey">ba</span>
     </div>
 
-    <p class="hint">Sentuh huruf untuk mengganti warna menjadi merah dan memutar suara. Simpan file <code>suaraCa.mp3</code> dan <code>suaraDa.mp3</code> di folder <code>audio</code>.</p>
+    <div class="line" id="line3">
+      <!-- "baba (ba warna hitam) dan (ba warna abu)" -->
+      <span class="letter black">ba</span><span class="letter grey">ca</span>&nbsp;&nbsp;&nbsp;
+      <span class="letter black">ca</span><span class="letter grey">ba</span>&nbsp;&nbsp;&nbsp;
+      <span class="letter black">a</span><span class="letter grey">ca</span>&nbsp;&nbsp;&nbsp;
+    </div>
+
+    <div class="line" id="line4">
+      <!-- "baa (ba warna hitam) dan (a warna abu)" -->
+      <span class="letter black">ba</span><span class="letter grey">ba</span>&nbsp;&nbsp;&nbsp;
+      <span class="letter black">ca</span><span class="letter grey">ca</span>
+    </div>
+
+    <div class="controls">
+      <button class="btn" id="resetBtn">Reset warna</button>
+      <button class="btn" id="toggleSound">Mute / Unmute</button>
+    </div>
+    
+<div style="display: flex; justify-content: space-between; margin-top: 20px;">
+  <!-- Tombol Back -->
+  <button onclick="window.location.href='index.html'" style="
+    background-color: #00aa71ff; 
+    color: white; 
+    padding: 10px 20px; 
+    border: none; 
+    border-radius: 5px; 
+    font-size: 16px;
+    font-weight:900;
+    cursor: pointer;">
+    Back
+  </button>
+
+  <!-- Tombol Next -->
+  <button onclick="window.location.href='halaman2.html'" style="
+    background-color: #00aa71ff; 
+    color: white; 
+    padding: 10px 20px; 
+    border: none; 
+    border-radius: 5px; 
+    font-size: 16px;
+    font-weight:900;
+    cursor: pointer;">
+    Next
+  </button>
+</div>
+
+
+    <p class="hint">Sentuh huruf <strong>a</strong> atau <strong>ba</strong> di atas untuk mengganti warnanya menjadi merah dan memutar suara. Agar suara berjalan, unggah file audio <code>suaraA.mp3</code> dan <code>ba.mp3</code> ke folder yang sama dengan file ini.</p>
   </div>
 
-  <audio id="audio-ca" preload="auto" src="audio/suaraCa.mp3"></audio>
-  <audio id="audio-da" preload="auto" src="audio/suaraDa.mp3"></audio>
+  <!-- Audio (ganti nama file jika format berbeda, mis: suaraA.m3 → suaraA.mp3) -->
+  <audio id="audio-a" preload="auto" src="audio/suaraA.mp3"></audio>
+  <audio id="audio-ba" preload="auto" src="audio/suaraBa.mp3"></audio>
 
   <script>
-    const soundEnabled = true;
-    const audioCa = document.getElementById('audio-ca');
-    const audioDa = document.getElementById('audio-da');
+    // Element references
+    const btnA = document.querySelector('.letter-btn[data-type="a"]');
+    const btnBa = document.querySelector('.letter-btn[data-type="ba"]');
+    const audioA = document.getElementById('audio-a');
+    const audioBa = document.getElementById('audio-ba');
+    const resetBtn = document.getElementById('resetBtn');
+    const toggleSoundBtn = document.getElementById('toggleSound');
+    let soundEnabled = true;
 
+    // helper: set active (red) for a letter span passed (the visible .letter)
     function setActiveLetter(el) {
+      // remove red class from all same-letter types if you want single-active behavior
+      // but here we only change the clicked element's visual
       el.classList.remove('black','grey');
       el.classList.add('red');
     }
 
     function playSoundFor(type){
       if(!soundEnabled) return;
-      if(type === 'ca'){
-        audioCa.currentTime = 0;
-        audioCa.play().catch(()=>{});
-      } else if(type === 'da'){
-        audioDa.currentTime = 0;
-        audioDa.play().catch(()=>{});
+      if(type === 'a'){
+        if(audioA){
+          audioA.currentTime = 0;
+          audioA.play().catch(()=>{ /* ignore autoplay issues */ });
+        }
+      } else if(type === 'ba'){
+        if(audioBa){
+          audioBa.currentTime = 0;
+          audioBa.play().catch(()=>{});
+        }
       }
     }
 
-    document.querySelectorAll('.letter-btn').forEach(btn => {
-      btn.addEventListener('click', ()=>{
-        const span = btn.querySelector('.letter');
-        setActiveLetter(span);
-        playSoundFor(btn.dataset.type);
+    // On touch/click handlers for top buttons
+    btnA.addEventListener('click', ()=> {
+      const span = btnA.querySelector('.letter');
+      setActiveLetter(span);
+      playSoundFor('a');
+    });
+
+    btnBa.addEventListener('click', ()=> {
+      const span = btnBa.querySelector('.letter');
+      setActiveLetter(span);
+      playSoundFor('ba');
+    });
+
+    // Also allow clicking any letter in the body lines:
+    document.querySelectorAll('.line .letter').forEach(letterEl => {
+      letterEl.style.cursor = 'pointer';
+      letterEl.addEventListener('click', (e)=>{
+        const text = letterEl.textContent.trim().toLowerCase();
+        // determine whether this span is 'a' or 'ba' (or composite like 'aa','ba' etc)
+        if(text === 'a'){
+          setActiveLetter(letterEl);
+          playSoundFor('a');
+        } else if(text === 'ba'){
+          setActiveLetter(letterEl);
+          playSoundFor('ba');
+        } else {
+          // for composites like "aa" or "baba" we can try to find inner 'a' or 'ba' spans;
+          // in our markup composites are made of adjacent spans; if text length>2, do nothing
+        }
       });
     });
+
+    resetBtn.addEventListener('click', ()=>{
+      document.querySelectorAll('.letter').forEach(el=>{
+        el.classList.remove('red');
+        // restore original black/grey depending on existing class in markup:
+        // if element originally had grey in markup we keep it grey; else black.
+        // We'll check data-state by scanning text color in DOM: simpler -> use attribute
+        // But since markup uses classes black/grey, restore those if present in HTML source:
+        // We'll default to black if neither present.
+        if(el.classList.contains('grey')) {
+          // already grey -> keep grey
+          el.classList.remove('black','red');
+          el.classList.add('grey');
+        } else {
+          el.classList.remove('grey','red');
+          el.classList.add('black');
+        }
+      });
+    });
+
+    toggleSoundBtn.addEventListener('click', ()=>{
+      soundEnabled = !soundEnabled;
+      toggleSoundBtn.textContent = soundEnabled ? 'Mute / Unmute' : 'Mute / Unmute';
+      // visual feedback optional
+      toggleSoundBtn.style.opacity = soundEnabled ? '1' : '0.6';
+    });
+
+    // mobile-friendly: ensure touchstart triggers same as click
+    function bindTouch(el, fn){
+      el.addEventListener('touchstart', function(e){
+        e.preventDefault();
+        fn();
+      }, {passive:false});
+    }
+    bindTouch(btnA, ()=> btnA.click());
+    bindTouch(btnBa, ()=> btnBa.click());
+
+    // Ensure initial classes intact (some browsers may rearrange)
+    (function initRestore(){
+      document.querySelectorAll('.letter').forEach(el=>{
+        if(!el.classList.contains('black') && !el.classList.contains('grey') && !el.classList.contains('red')){
+          el.classList.add('black');
+        }
+      });
+    })();
   </script>
 </body>
 </html>
+
