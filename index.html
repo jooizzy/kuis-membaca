@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Kuis Huruf - Halaman 1</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
   <style>
     :root{
@@ -18,7 +18,7 @@
     html,body{
       height:100%;
       margin:0;
-      font-family: 'Didact Gothic', sans-serif;
+      font-family: 'Be Vietnam Pro', sans-serif;
       background:#fff;
       color:var(--black);
       -webkit-tap-highlight-color: transparent;
@@ -67,7 +67,7 @@
 
     .letter {
       font-weight:800;
-      font-size: 44pt;
+      font-size: 38pt;
       
     }
 
@@ -103,6 +103,7 @@
       display:flex;
       gap:8px;
       flex-wrap:wrap;
+      justify-content: center;
     }
 
     .btn{
@@ -111,8 +112,17 @@
       border:1px solid #ccc;
       background:#fff;
       cursor:pointer;
-   	
     }
+    .nav-btn {
+  background-color: #00aa71ff; 
+  color: white; 
+  padding: 10px 20px; 
+  border: none; 
+  border-radius: 5px; 
+  font-size: 16px;
+  font-weight: 900;
+  cursor: pointer;
+}
     
   </style>
 </head>
@@ -148,36 +158,21 @@
     <div class="line" id="line3">
       <!-- "baba (ba warna hitam) dan (ba warna abu)" -->
       <span class="letter black">ba</span><span class="letter grey">ba</span>&nbsp;&nbsp;&nbsp;
-      <span class="letter black">a</span><span class="letter grey">ba</span>&nbsp;&nbsp;&nbsp;
-      <span class="letter black">a</span><span class="letter grey">ba</span>&nbsp;&nbsp;&nbsp;
+      <span class="letter black">a</span><span class="letter grey">ba</span>-<span class="letter black">a</span><span class="letter grey">ba</span>
     </div>
 
     <div class="line" id="line4">
       <!-- "baa (ba warna hitam) dan (a warna abu)" -->
-      <span class="letter black">a</span><span class="letter grey">ba</span>&nbsp;&nbsp;&nbsp;
-      <span class="letter black">a</span><span class="letter grey">ba</span>
+      <span class="letter black">a</span>&nbsp;&nbsp;&nbsp;<span class="letter grey">ba</span>
     </div>
 
     <div class="controls">
-      <button class="btn" id="resetBtn">Reset warna</button>
-      <button class="btn" id="toggleSound">Mute / Unmute</button>
-    </div>
-    
-<div style="text-align: right;">
-  <button onclick="window.location.href='halaman2.html'" style="
-    background-color: #00aa71ff; 
-    color: white; 
-    padding: 10px 20px; 
-    border: none; 
-    border-radius: 5px; 
-    font-size: 16px;
-    font-weight:900;
-    cursor: pointer;">
-    Next
-  </button>
+  <button class="btn" id="resetBtn">Reset warna</button>
+  <button class="btn" id="toggleSound">Mute / Unmute</button>  
+  <button class="nav-btn" onclick="window.location.href='halaman2.html'">Next</button>
 </div>
 
-    <p class="hint">Sentuh huruf <strong>a</strong> atau <strong>ba</strong> di atas untuk mengganti warnanya menjadi merah dan memutar suara. Agar suara berjalan, unggah file audio <code>suaraA.mp3</code> dan <code>ba.mp3</code> ke folder yang sama dengan file ini.</p>
+    <p class="hint">Sentuh huruf <strong>a</strong> atau <strong>ba</strong> di atas untuk memutar suara.</p>
   </div>
 
   <!-- Audio (ganti nama file jika format berbeda, mis: suaraA.m3 → suaraA.mp3) -->
@@ -296,4 +291,3 @@
   </script>
 </body>
 </html>
-
