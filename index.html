@@ -5,17 +5,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Kuis Huruf - Halaman 1</title>
 
-  <style>
-    /* ganti file font di folder fonts/ sesuai nama file kamu */
-    @font-face {
-      font-family: "CustomFont";
-      src: url("fonts/CustomFont.woff2") format("woff2"),
-           url("fonts/CustomFont.woff") format("woff");
-      font-weight: normal;
-      font-style: normal;
-      font-display: swap;
-    }
+  <link href="https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap" rel="stylesheet">
 
+  <style>
     :root{
       --black: #000;
       --grey: #8a8a8a;
@@ -26,7 +18,7 @@
     html,body{
       height:100%;
       margin:0;
-      font-family: "CustomFont", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      font-family: 'Didact Gothic', sans-serif;
       background:#fff;
       color:var(--black);
       -webkit-tap-highlight-color: transparent;
@@ -143,33 +135,47 @@
     <!-- Paragraf baru berisi urutan yang diminta -->
     <div class="line" id="line1">
       <!-- "aa a (warna hitam) a (warna abu tua)" -->
-      <span class="letter black">a</span><span class="letter grey">a</span>&nbsp;&nbsp;
-      <span class="letter black">a</span><span class="letter grey">ba</span>&nbsp;&nbsp;
-      <span class="letter black">ba</span><span class="letter grey">a</span>
+      <span class="letter black">a</span>&nbsp;&nbsp;&nbsp;<span class="letter grey">a</span>&nbsp;&nbsp;&nbsp;<span class="letter black">ba</span>&nbsp;&nbsp;&nbsp;<span class="letter grey">ba</span>
 
     </div>
 
     <div class="line" id="line2">
       <!-- "aba (a warna hitam) ba (warna abu tua)" -->
-      <span class="segment"><span class="letter black">a</span><span> </span><span class="letter grey">ba</span></span>
+      <span class="segment"><span class="letter black">a</span><span> &nbsp;&nbsp;&nbsp;</span><span class="letter grey">ba</span></span>&nbsp;
+      <span class="letter black">a</span><span class="letter grey">ba</span>
     </div>
 
     <div class="line" id="line3">
       <!-- "baba (ba warna hitam) dan (ba warna abu)" -->
-      <span class="segment"><span class="letter black">ba</span><span class="letter black">ba</span></span>
-      <span class="segment"><span class="letter grey">ba</span></span>
+      <span class="letter black">ba</span><span class="letter grey">ba</span>&nbsp;&nbsp;&nbsp;
+      <span class="letter black">a</span><span class="letter grey">ba</span>&nbsp;&nbsp;&nbsp;
+      <span class="letter black">a</span><span class="letter grey">ba</span>&nbsp;&nbsp;&nbsp;
     </div>
 
     <div class="line" id="line4">
       <!-- "baa (ba warna hitam) dan (a warna abu)" -->
-      <span class="segment"><span class="letter black">ba</span><span class="letter black">a</span></span>
-      <span class="segment"><span class="letter grey">a</span></span>
+      <span class="letter black">a</span><span class="letter grey">ba</span>&nbsp;&nbsp;&nbsp;
+      <span class="letter black">a</span><span class="letter grey">ba</span>
     </div>
 
     <div class="controls">
       <button class="btn" id="resetBtn">Reset warna</button>
       <button class="btn" id="toggleSound">Mute / Unmute</button>
     </div>
+    
+<div style="text-align: right;">
+  <button onclick="window.location.href='halaman2.html'" style="
+    background-color: #00aa71ff; 
+    color: white; 
+    padding: 10px 20px; 
+    border: none; 
+    border-radius: 5px; 
+    font-size: 16px;
+    font-weight:900;
+    cursor: pointer;">
+    Next
+  </button>
+</div>
 
     <p class="hint">Sentuh huruf <strong>a</strong> atau <strong>ba</strong> di atas untuk mengganti warnanya menjadi merah dan memutar suara. Agar suara berjalan, unggah file audio <code>suaraA.mp3</code> dan <code>ba.mp3</code> ke folder yang sama dengan file ini.</p>
   </div>
@@ -290,3 +296,4 @@
   </script>
 </body>
 </html>
+
