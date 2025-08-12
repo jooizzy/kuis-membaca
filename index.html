@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kuis Membaca</title>
+</head>
+<body>
+  <h1>Kuis Membaca</h1>
+  <p>Bacalah kata ini dengan keras: <strong id="target-word">apel</strong></p>
+  <button id="start-btn">Mulai Rekam</button>
+  <p id="status"></p>
+
+  <script>
+    const targetWord = document.getElementById('target-word').innerText.toLowerCase();
+    const statusEl = document.getElementById('status');
+    const startBtn = document.getElementById('start-btn');
+
+    // Web Speech API (SpeechRecognition)
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'id-ID';
+    recognition.continuous = false;
+
+    startBtn.onclick = () => {
+      statusEl.textContent = "Mendengarkan...";
+      recognition.start();
+    };
+
+    recognition.onresult = (event) => {
+      const userSpeech = event.results[0][0].transcript.toLowerCase().trim();
+      if (userSpeech === targetWord) {
+        statusEl.textContent = "Benar! 🎉";
+      } else {
+        statusEl.textContent = "Bacaanmu belum benar, coba ulangi lagi.";
+        new Audio('https://www.soundjay.com/button/beep-07.wav').play();
+      }
+    };
+
+    recognition.onerror = () => {
+      statusEl.textContent = "Terjadi kesalahan. Coba lagi.";
+    };
+  </script>
+</body>
+</html>
+
