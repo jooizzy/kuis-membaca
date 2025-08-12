@@ -1,1 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kuis Huruf - Halaman 2</title>
+  <link rel="stylesheet" href="style.css"> <!-- kalau mau pakai CSS yang sama -->
+</head>
+<body>
+  <div class="wrap">
+    <h1>Halaman 2 — Mengenal Huruf</h1>
 
+    <div class="buttons">
+      <div class="letter-btn" data-type="ca">
+        <span class="letter black">ca</span>
+      </div>
+
+      <div class="letter-btn" data-type="da">
+        <span class="letter black">da</span>
+      </div>
+    </div>
+
+    <div class="line">
+      <span class="letter black">ca</span>&nbsp;&nbsp;&nbsp;
+      <span class="letter grey">ca</span>&nbsp;&nbsp;&nbsp;
+      <span class="letter black">da</span>&nbsp;&nbsp;&nbsp;
+      <span class="letter grey">da</span>
+    </div>
+
+    <div style="text-align: right;">
+      <button onclick="window.location.href='halaman3.html'" style="
+        background-color: #00aa71ff; 
+        color: white; 
+        padding: 10px 20px; 
+        border: none; 
+        border-radius: 5px; 
+        font-size: 16px;
+        font-weight:900;
+        cursor: pointer;">
+        Next
+      </button>
+    </div>
+
+    <p class="hint">Sentuh huruf untuk mengganti warna menjadi merah dan memutar suara. Simpan file <code>suaraCa.mp3</code> dan <code>suaraDa.mp3</code> di folder <code>audio</code>.</p>
+  </div>
+
+  <audio id="audio-ca" preload="auto" src="audio/suaraCa.mp3"></audio>
+  <audio id="audio-da" preload="auto" src="audio/suaraDa.mp3"></audio>
+
+  <script>
+    const soundEnabled = true;
+    const audioCa = document.getElementById('audio-ca');
+    const audioDa = document.getElementById('audio-da');
+
+    function setActiveLetter(el) {
+      el.classList.remove('black','grey');
+      el.classList.add('red');
+    }
+
+    function playSoundFor(type){
+      if(!soundEnabled) return;
+      if(type === 'ca'){
+        audioCa.currentTime = 0;
+        audioCa.play().catch(()=>{});
+      } else if(type === 'da'){
+        audioDa.currentTime = 0;
+        audioDa.play().catch(()=>{});
+      }
+    }
+
+    document.querySelectorAll('.letter-btn').forEach(btn => {
+      btn.addEventListener('click', ()=>{
+        const span = btn.querySelector('.letter');
+        setActiveLetter(span);
+        playSoundFor(btn.dataset.type);
+      });
+    });
+  </script>
+</body>
+</html>
