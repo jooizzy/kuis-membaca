@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kuis Huruf - Halaman 3</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --black: #000;
+      --grey: #8a8a8a;
+      --red:  #d32f2f;
+      --touch-size: 24pt;
+    }
+
+    html,body{
+      height:100%;
+      margin:0;
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background:#fff;
+      color:var(--black);
+      -webkit-tap-highlight-color: transparent;
+      text-align: center;
+    }
+
+    .wrap{
+      max-width:760px;
+      margin:18px auto;
+      padding:16px;
+    }
+
+    h1{
+      font-size:1.25rem;
+      margin:0 0 12px 0;
+    }
+
+    .buttons{
+      display:flex;
+      justify-content: center;
+      gap:12px;
+      margin-bottom:20px;
+      flex-wrap:wrap;
+    }
+
+    .letter-btn{
+      background-color: #e7e9ebff; 
+      border:1px solid #ddd;
+      border-radius:8px;
+      padding:18px 26px;
+      font-size:var(--touch-size);
+      cursor:pointer;
+      user-select:none;
+      touch-action:manipulation;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:72px;
+    }
+
+    .letter-btn:active{ transform:scale(1.1); }
+
+    .letter {
+      margin: 0;
+      padding: 0;
+      font-weight:bold;
+      font-size: 42pt;
+    }
+
+    .letter.black { color: var(--black); }
+    .letter.grey  { color: var(--grey); }
+    .letter.red   { color: var(--red); }
+
+    .line {
+      margin:12px 0;
+      font-size: var(--touch-size);
+      line-height:1.5;
+      word-break:break-word;
+    }
+
+    .segment{
+      margin-right:12px;
+      display:inline-block;
+      padding:6px 8px;
+      border-radius:6px;
+    }
+
+    .hint{
+      margin-top:18px;
+      font-size:0.95rem;
+      color:#555;
+    }
+
+    .controls{
+      margin-top:18px;
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      justify-content: center; /* tombol di tengah */
+    }
+
+    .btn{
+      padding:10px 14px;
+      border-radius:6px;
+      border:1px solid #ccc;
+      background:#fff;
+      cursor:pointer;
+    }
+    .nav-btn {
+  background-color: #00aa71ff; 
+  color: white; 
+  padding: 10px 20px; 
+  border: none; 
+  border-radius: 5px; 
+  font-size: 16px;
+  font-weight: 900;
+  cursor: pointer;
+}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Halaman 3 — Belajar Membaca</h1>
+
+    <!-- Tombol huruf -->
+    <div class="buttons">
+      <div class="letter-btn" data-type="ca" role="button">
+        <span class="letter black" data-original="black">ci</span>
+      </div>
+      <div class="letter-btn" data-type="ca" role="button">
+        <span class="letter black" data-original="black">da</span>
+      </div>
+    </div>
+
+    <!-- Paragraf -->
+    <div class="line" id="line1">
+      <span class="letter black" data-original="black">da</span>&nbsp;&nbsp;&nbsp;
+      <span class="letter grey" data-original="grey">da</span>&nbsp;&nbsp;&nbsp;
+      <span class="letter black" data-original="black">da</span><span class="letter grey" data-original="grey">da</span>
+    </div>
+
+    <div class="line" id="line2">
+      <span class="segment">
+        <span class="letter black" data-original="black">a</span>
+        <span> &nbsp;&nbsp;&nbsp;</span>
+        <span class="letter grey" data-original="grey">da</span>
+      </span>&nbsp;
+      <span class="letter black" data-original="black">a</span><span class="letter grey" data-original="grey">da</span>
+    </div>
+
+    <div class="line" id="line3">
+      <span class="letter black" data-original="black">ba</span>&nbsp;&nbsp;&nbsp;<span class="letter grey" data-original="grey">da</span>&nbsp;&nbsp;&nbsp;
+      <span class="letter black" data-original="black">ba</span><span class="letter grey" data-original="grey">da</span>
+    </div>
+
+    <div class="line" id="line4">
+      <span class="letter black" data-original="black">ca</span>&nbsp;&nbsp;&nbsp;<span class="letter grey" data-original="grey">da</span>&nbsp;&nbsp;&nbsp;
+      <span class="letter black" data-original="black">ca</span><span class="letter grey" data-original="grey">da</span>
+    </div>
+    <div class="wrap">
+    <div class="line" id="line5">
+      <span class="letter black" data-original="black">da</span>&nbsp;&nbsp;&nbsp;<span class="letter grey" data-original="grey">da</span>&nbsp;&nbsp;&nbsp;
+      <span class="letter black" data-original="black">da</span><span class="letter grey" data-original="grey">da</span>
+    </div>
+    <div class="wrap">
+
+    <!-- Tombol huruf -->
+          <div class="letter-btn" data-type="ca" role="button">
+        <span class="letter black" data-original="black">da</span>
+      </div>
+    </div>
+
+    <div class="controls">
+    <button class="nav-btn" onclick="window.location.href='halaman2.html'">Back</button>
+  <button class="btn" id="resetBtn">Reset warna</button>
+  <button class="btn" id="toggleSound">Mute / Unmute</button>  
+  <button class="nav-btn" onclick="window.location.href='halaman4.html'">Next</button>
+</div>
+
+    <p class="hint">
+      Sentuh huruf untuk mendengarkan suaranya.
+    </p>
+  </div>
+
+  <!-- Audio -->
+  <audio id="audio-ba" preload="auto" src="audio/suaraBa.mp3"></audio>
+  <audio id="audio-ca" preload="auto" src="audio/suaraCa.mp3"></audio>
+  <audio id="audio-a" preload="auto" src="audio/suaraA.mp3"></audio>
+  <audio id="audio-da" preload="auto" src="audio/suaraDa.mp3"></audio>
+
+  <script>
+    let soundEnabled = true;
+
+    function setActiveLetter(el) {
+      el.classList.remove('black', 'grey');
+      el.classList.add('red');
+    }
+
+    function playSoundFor(type) {
+      if (!soundEnabled) return;
+      const audio = document.getElementById('audio-' + type);
+      if (audio) {
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+      }
+    }
+
+    // Klik di huruf manapun
+    document.querySelectorAll('.letter').forEach(letterEl => {
+      letterEl.style.cursor = 'pointer';
+      letterEl.addEventListener('click', () => {
+        setActiveLetter(letterEl);
+        playSoundFor(letterEl.textContent.trim().toLowerCase());
+      });
+    });
+
+    // Reset warna ke aslinya
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      document.querySelectorAll('.letter').forEach(el => {
+        el.classList.remove('red', 'black', 'grey');
+        el.classList.add(el.dataset.original); // kembali ke warna awal
+      });
+    });
+
+    // Toggle mute/unmute
+    document.getElementById('toggleSound').addEventListener('click', () => {
+      soundEnabled = !soundEnabled;
+      document.getElementById('toggleSound').style.opacity = soundEnabled ? '1' : '0.6';
+    });
+  </script>
+</body>
+</html>
