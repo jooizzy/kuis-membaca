@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Membaca</title>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            text-align: center;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin: 20px;
+            color: #333;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .huruf {
+            font-size: 36px;
+            margin: 15px;
+            padding: 20px 30px;
+            background: #fff;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            position: relative;
+            font-weight: 600;
+        }
+        .nav-btn {
+  background-color: #00aa71ff; 
+  color: white; 
+  padding: 10px 20px; 
+  border: none; 
+  border-radius: 5px; 
+  font-size: 16px;
+  font-weight: 900;
+  cursor: pointer;
+}
+        .huruf.biru { background: #007bff; color: white; }
+        .huruf.hijau { background: #28a745; color: white; }
+        .huruf.merah { background: #dc3545; color: white; }
+        .icon {
+            position: absolute;
+            right: 8px;
+            top: 8px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        /* Warna awal */
+        .ba { color: #003366; }
+        .ca { color: #8B0000; }
+        .a-only { color: #DAA520; }
+        p#status {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sentuh & Ucapkan kata</h1>
+    <div class="container">
+        <div class="huruf" data-huruf="baba"><span class="ba">ba</span><span class="ba">ba</span></div>
+        <div class="huruf" data-huruf="caca"><span class="ca">ca</span><span class="ca">ca</span></div>
+        <div class="huruf" data-huruf="baca"><span class="ba">ba</span><span class="ca">ca</span></div>
+        <div class="huruf" data-huruf="aba"><span class="a-only">a</span><span class="ba">ba</span></div>
+        <div class="huruf" data-huruf="aca"><span class="a-only">a</span><span class="ca">ca</span></div>
+    </div>
+    <p id="status">sentuh kata untuk memulai</p>
+
+    <script>
+        let recognition;
+        const statusText = document.getElementById('status');
+
+        if ('webkitSpeechRecognition' in window) {
+            recognition = new webkitSpeechRecognition();
+            recognition.lang = 'id-ID';
+            recognition.continuous = false;
+            recognition.interimResults = false;
+
+            recognition.onstart = () => {
+                statusText.textContent = '🎤 mendengarkan...';
+            };
+
+            recognition.onresult = (event) => {
+                const hasil = event.results[0][0].transcript.toLowerCase().trim();
+                const hurufAktif = document.querySelector('.huruf.biru');
+                if (!hurufAktif) return;
+
+                const target = hurufAktif.getAttribute('data-huruf').toLowerCase();
+
+                hurufAktif.classList.remove('biru');
+
+                if (hasil.includes(target)) {
+                    statusText.textContent = `✔ Benar! Kamu mengucapkan: ${hasil}`;
+                    hurufAktif.classList.add('hijau');
+                    hurufAktif.innerHTML += ` <span class="icon">✔</span>`;
+                } else {
+                    statusText.textContent = `✖ Salah! Kamu mengucapkan: ${hasil}`;
+                    hurufAktif.classList.add('merah');
+                    hurufAktif.innerHTML += ` <span class="icon">✖</span>`;
+                }
+            };
+
+            recognition.onerror = () => {
+                statusText.textContent = '⚠ coba lagi.';
+            };
+
+            recognition.onend = () => {};
+        } else {
+            statusText.textContent = 'browser kamu tidak mendukung speech recognition.';
+        }
+
+        // Klik kata → aktifkan mic + ubah warna pastel
+        document.querySelectorAll('.huruf').forEach(el => {
+            el.addEventListener('click', () => {
+                // Reset semua huruf
+                document.querySelectorAll('.huruf').forEach(h => {
+                    h.classList.remove('biru','hijau','merah');
+                    // Kembalikan warna awal
+                    h.querySelectorAll('.ba').forEach(span => span.style.color = '#003366');
+                    h.querySelectorAll('.ca').forEach(span => span.style.color = '#8B0000');
+                    h.querySelectorAll('.a-only').forEach(span => span.style.color = '#DAA520');
+                });
+
+                el.classList.add('biru');
+
+                // Ubah warna ke pastel terang
+                el.querySelectorAll('.ba').forEach(span => span.style.color = '#BBDEFB'); // biru pastel
+                el.querySelectorAll('.ca').forEach(span => span.style.color = '#F8BBD0'); // pink pastel
+                el.querySelectorAll('.a-only').forEach(span => span.style.color = '#FFF9C4'); // kuning pastel
+
+                if (recognition) {
+                    recognition.stop();
+                    recognition.start();
+                }
+            });
+        });
+    </script>
+    
+    <!-- Tombol kontrol -->
+    <div class="controls">
+    <button class="nav-btn" onclick="window.location.href='index.html'">Back</button>
+  <button class="nav-btn" onclick="window.location.href='halaman2.html'">Next</button>
+</div>
+</body>
+</html>
