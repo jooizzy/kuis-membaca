@@ -12,7 +12,7 @@
       --black: #000;
       --grey: #8a8a8a;
       --red:  #d32f2f;
-      --touch-size: 24pt; /* sesuai permintaan */
+      --touch-size: 24pt;
     }
 
     html,body{
@@ -29,13 +29,11 @@
       max-width:760px;
       margin:18px auto;
       padding:16px;
-      
     }
 
     h1{
       font-size:1.25rem;
       margin:0 0 12px 0;
-      
     }
 
     .buttons{
@@ -60,7 +58,6 @@
       align-items:center;
       justify-content:center;
       min-width:72px;
-      
     }
 
     .letter-btn:active{ transform:scale(1.1); }
@@ -68,7 +65,6 @@
     .letter {
       font-weight:800;
       font-size: 38pt;
-      
     }
 
     .letter.black { color: var(--black); }
@@ -88,8 +84,6 @@
       display:inline-block;
       padding:6px 8px;
       border-radius:6px;
-      
-      
     }
 
     .hint{
@@ -113,28 +107,26 @@
       background:#fff;
       cursor:pointer;
     }
+
     .nav-btn {
-  background-color: #00aa71ff; 
-  color: white; 
-  padding: 10px 20px; 
-  border: none; 
-  border-radius: 5px; 
-  font-size: 16px;
-  font-weight: 900;
-  cursor: pointer;
-}
-    
+      background-color: #00aa71ff; 
+      color: white; 
+      padding: 10px 20px; 
+      border: none; 
+      border-radius: 5px; 
+      font-size: 16px;
+      font-weight: 900;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
     <h1>Halaman 1 — Mengenal Huruf</h1>
 
-    <!-- Tombol utama: huruf a dan ba (warna hitam awalnya) -->
     <div class="buttons">
       <div class="letter-btn" data-type="a" role="button" aria-label="huruf a">
         <span class="letter black">a</span>
-        
       </div>
 
       <div class="letter-btn" data-type="ba" role="button" aria-label="huruf ba">
@@ -142,104 +134,87 @@
       </div>
     </div>
 
-    <!-- Paragraf baru berisi urutan yang diminta -->
     <div class="line" id="line1">
-      <!-- "aa a (warna hitam) a (warna abu tua)" -->
       <span class="letter black">a</span>&nbsp;&nbsp;&nbsp;<span class="letter grey">a</span>&nbsp;&nbsp;&nbsp;<span class="letter black">ba</span>&nbsp;&nbsp;&nbsp;<span class="letter grey">ba</span>
-
     </div>
 
     <div class="line" id="line2">
-      <!-- "aba (a warna hitam) ba (warna abu tua)" -->
       <span class="segment"><span class="letter black">a</span><span> &nbsp;&nbsp;&nbsp;</span><span class="letter grey">ba</span></span>&nbsp;
       <span class="letter black">a</span><span class="letter grey">ba</span>
     </div>
 
     <div class="line" id="line3">
-      <!-- "baba (ba warna hitam) dan (ba warna abu)" -->
       <span class="letter black">ba</span><span class="letter grey">ba</span>&nbsp;&nbsp;&nbsp;
       <span class="letter black">a</span><span class="letter grey">ba</span>-<span class="letter black">a</span><span class="letter grey">ba</span>
     </div>
 
     <div class="line" id="line4">
-      <!-- "baa (ba warna hitam) dan (a warna abu)" -->
       <span class="letter black">a</span>&nbsp;&nbsp;&nbsp;<span class="letter grey">ba</span>
     </div>
 
     <div class="controls">
-  <button class="btn" id="resetBtn">Reset warna</button>
-  <button class="btn" id="toggleSound">Mute / Unmute</button>  
-  <button class="nav-btn" onclick="window.location.href='test1.html'">Next</button>
-</div>
+      <button class="btn" id="resetBtn">Reset warna</button>
+      <button class="btn" id="toggleSound">Mute / Unmute</button>  
+      <button class="nav-btn" onclick="window.location.href='test1.html'">Next</button>
+    </div>
 
     <p class="hint">Sentuh huruf <strong>a</strong> atau <strong>ba</strong> di atas untuk memutar suara.</p>
   </div>
 
-  <!-- Audio (ganti nama file jika format berbeda, mis: suaraA.m3 → suaraA.mp3) -->
-  <audio id="audio-a" preload="auto" src="audio/suaraA.mp3"></audio>
-  <audio id="audio-ba" preload="auto" src="audio/suaraBa.mp3"></audio>
-
   <script>
-    // Element references
     const btnA = document.querySelector('.letter-btn[data-type="a"]');
     const btnBa = document.querySelector('.letter-btn[data-type="ba"]');
-    const audioA = document.getElementById('audio-a');
-    const audioBa = document.getElementById('audio-ba');
     const resetBtn = document.getElementById('resetBtn');
     const toggleSoundBtn = document.getElementById('toggleSound');
     let soundEnabled = true;
+    let voices = [];
 
-    // helper: set active (red) for a letter span passed (the visible .letter)
+    // Ambil daftar voice
+    function loadVoices() {
+      voices = speechSynthesis.getVoices();
+    }
+    loadVoices();
+    speechSynthesis.onvoiceschanged = loadVoices;
+
+    function speakText(text) {
+      if (!soundEnabled) return;
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'id-ID';
+      const indoVoice = voices.find(v => v.lang === 'id-ID');
+      if (indoVoice) {
+        utterance.voice = indoVoice;
+      }
+      utterance.rate = 0.9; // agak pelan supaya jelas
+      speechSynthesis.speak(utterance);
+    }
+
     function setActiveLetter(el) {
-      // remove red class from all same-letter types if you want single-active behavior
-      // but here we only change the clicked element's visual
       el.classList.remove('black','grey');
       el.classList.add('red');
     }
 
-    function playSoundFor(type){
-      if(!soundEnabled) return;
-      if(type === 'a'){
-        if(audioA){
-          audioA.currentTime = 0;
-          audioA.play().catch(()=>{ /* ignore autoplay issues */ });
-        }
-      } else if(type === 'ba'){
-        if(audioBa){
-          audioBa.currentTime = 0;
-          audioBa.play().catch(()=>{});
-        }
-      }
-    }
-
-    // On touch/click handlers for top buttons
     btnA.addEventListener('click', ()=> {
       const span = btnA.querySelector('.letter');
       setActiveLetter(span);
-      playSoundFor('a');
+      speakText('a');
     });
 
     btnBa.addEventListener('click', ()=> {
       const span = btnBa.querySelector('.letter');
       setActiveLetter(span);
-      playSoundFor('ba');
+      speakText('ba');
     });
 
-    // Also allow clicking any letter in the body lines:
     document.querySelectorAll('.line .letter').forEach(letterEl => {
       letterEl.style.cursor = 'pointer';
-      letterEl.addEventListener('click', (e)=>{
+      letterEl.addEventListener('click', ()=>{
         const text = letterEl.textContent.trim().toLowerCase();
-        // determine whether this span is 'a' or 'ba' (or composite like 'aa','ba' etc)
         if(text === 'a'){
           setActiveLetter(letterEl);
-          playSoundFor('a');
+          speakText('a');
         } else if(text === 'ba'){
           setActiveLetter(letterEl);
-          playSoundFor('ba');
-        } else {
-          // for composites like "aa" or "baba" we can try to find inner 'a' or 'ba' spans;
-          // in our markup composites are made of adjacent spans; if text length>2, do nothing
+          speakText('ba');
         }
       });
     });
@@ -247,13 +222,7 @@
     resetBtn.addEventListener('click', ()=>{
       document.querySelectorAll('.letter').forEach(el=>{
         el.classList.remove('red');
-        // restore original black/grey depending on existing class in markup:
-        // if element originally had grey in markup we keep it grey; else black.
-        // We'll check data-state by scanning text color in DOM: simpler -> use attribute
-        // But since markup uses classes black/grey, restore those if present in HTML source:
-        // We'll default to black if neither present.
         if(el.classList.contains('grey')) {
-          // already grey -> keep grey
           el.classList.remove('black','red');
           el.classList.add('grey');
         } else {
@@ -265,12 +234,9 @@
 
     toggleSoundBtn.addEventListener('click', ()=>{
       soundEnabled = !soundEnabled;
-      toggleSoundBtn.textContent = soundEnabled ? 'Mute / Unmute' : 'Mute / Unmute';
-      // visual feedback optional
       toggleSoundBtn.style.opacity = soundEnabled ? '1' : '0.6';
     });
 
-    // mobile-friendly: ensure touchstart triggers same as click
     function bindTouch(el, fn){
       el.addEventListener('touchstart', function(e){
         e.preventDefault();
@@ -280,7 +246,6 @@
     bindTouch(btnA, ()=> btnA.click());
     bindTouch(btnBa, ()=> btnBa.click());
 
-    // Ensure initial classes intact (some browsers may rearrange)
     (function initRestore(){
       document.querySelectorAll('.letter').forEach(el=>{
         if(!el.classList.contains('black') && !el.classList.contains('grey') && !el.classList.contains('red')){
