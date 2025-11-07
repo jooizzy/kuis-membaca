@@ -133,14 +133,29 @@
     let synth = window.speechSynthesis;
 
     function speak(text) {
-      if (!soundEnabled || !synth) return;
-      let utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'id-ID';
-      utterance.rate = 1; // kecepatan normal
-      utterance.pitch = 1;
-      synth.cancel(); // hentikan suara sebelumnya
-      synth.speak(utterance);
+    if (!soundEnabled || !synth) return;
+    let voices = synth.getVoices();
+
+    // kalau belum tersedia, tunggu event onvoiceschanged
+    if (!voices.length) {
+      window.speechSynthesis.onvoiceschanged = () => speak(text);
+      return;
     }
+      
+    let voice = voices.find(v => v.lang === 'id-ID');
+    let utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'id-ID';
+    utterance.voice = voice || voices[0]; // fallback kalau ga ada
+    utterance.rate = 1;
+    utterance.pitch = 1;
+      
+    synth.cancel();
+    synth.speak(utterance);
+  }
+
+    window.speechSynthesis.onvoiceschanged = () => {
+  console.log(speechSynthesis.getVoices());
+};
 
     function setActiveLetter(el) {
       el.classList.remove('black', 'grey');
